@@ -9,18 +9,21 @@ multiples n bound =
 
 {- Build a sieve of composite numbers
  - by composing the multiples of primes
- - n can be skipped if its already in the
+ - n can be skipped if it's already in the
  - sieve, since its multiples will also
  - be in the sieve.
  -}
 sieve :: Int -> Set.Set Int
-sieve bound =
-    foldl (\acc n -> 
+sieve candidate =
+    let
+        bound = floor 
+            $ sqrt 
+            $ fromIntegral candidate
+    in foldl (\acc n -> 
         if Set.member n acc
             then acc
-            else Set.union acc (multiples n bound)
+            else Set.union acc (multiples n candidate)
     ) Set.empty [2..bound]
-
 
 
 isPrime :: Int -> Bool
